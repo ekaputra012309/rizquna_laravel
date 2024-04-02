@@ -1,0 +1,41 @@
+title : custom session expired
+
+option 1
+place : App\Exceptions\Handler
+
+code :
+use Illuminate\Session\TokenMismatchException;
+
+public function render($request, Throwable $exception)
+{
+    if ($exception instanceof TokenMismatchException) {
+        return redirect()->route('login');
+    }
+
+    return parent::render($request, $exception);
+}
+
+option 2
+php artisan make:middleware CheckSessionExpiration
+
+public function handle($request, Closure $next)
+{
+    if ($request->session()->has('last_activity')) {
+        $lastActivity = $request->session()->get('last_activity');
+        $sessionLifetime = config('session.lifetime') * 60; // Convert minutes to seconds
+
+        if (time() - $lastActivity > $sessionLifetime) {
+            return redirect()->route('login');
+        }
+    }
+
+    return $next($request);
+}
+place : app/Http/Kernel.php
+
+protected $middlewareGroups = [
+    'web' => [
+        // Other middleware...
+        \App\Http\Middleware\CheckSessionExpiration::class,
+    ],
+];
