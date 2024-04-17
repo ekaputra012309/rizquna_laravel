@@ -16,14 +16,14 @@ class RoomController extends Controller
 
     public function index()
     {
-        $kamars = Room::all();
+        $kamars = Room::with('user')->get();
         return response()->json($kamars);
     }
 
     public function show($id)
     {
         try {
-            $kamar = Room::find($id);
+            $kamar = Room::with('user')->find($id);
             return response()->json($kamar);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Kamar not found'], 404);

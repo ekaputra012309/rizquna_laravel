@@ -16,14 +16,14 @@ class AgentController extends Controller
 
     public function index()
     {
-        $agents = Agent::all();
+        $agents = Agent::with('user')->get();
         return response()->json($agents);
     }
 
     public function show($id)
     {
         try {
-            $agent = Agent::find($id);
+            $agent = Agent::with('user')->find($id);
             return response()->json($agent);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'agent not found'], 404);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Privilage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PrivilageController extends Controller
 {
@@ -15,57 +16,38 @@ class PrivilageController extends Controller
 
     public function index()
     {
-        $privilageItems = Privilage::with('sidebar')->get();
-        return response()->json($privilageItems);
-    }
-
-    public function byRole(Request $request)
-    {
-        $role_id = $request->query('role_id');
-        $privilages = Privilage::with('sidebar')
-            ->where('role_id', $role_id)
-            ->get();
-
-        $sidebarData = $privilages->map(function ($privilage) {
-            return $privilage->sidebar;
-        });
-
-        return response()->json($sidebarData);
-    }
-
-    public function store(Request $request)
-    {
-        // Create the new privilage item
-        $newMenuItem = Privilage::create([
-            'role_id' => $request->role_id,
-            'sidebar_id' => $request->sidebar_id,
-        ]);
-
-        return response()->json($newMenuItem, 201);
+        $privilage = Privilage::with('user', 'role')->get();
+        return response()->json($privilage);
     }
 
     public function show($id)
     {
-        $privilageItem = Privilage::findOrFail($id);
+        $privilageItem = Privilage::with('user', 'role')->findOrFail($id);
         return response()->json($privilageItem);
+    }
+
+    public function store(Request $request)
+    {
+        $privilage = Privilage::create($request->all());
+
+        return response()->json($privilage, 201);
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'role_id' => 'required|string',
-            'sidebar_id' => 'nullable|string',
-        ]);
-
-        $privilageItem = Privilage::findOrFail($id);
-        $privilageItem->update($request->all());
-        return response()->json($privilageItem, 200);
+        try {
+            $privilage = Privilage::findOrFail($id);
+            $privilage->update($request->all());
+            return response()->json($privilage, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Role not found'], 404);
+        }
     }
 
     public function destroy($id)
     {
-        $privilageItem = Privilage::findOrFail($id);
-        $privilageItem->delete();
+        $privilage = Privilage::findOrFail($id);
+        $privilage->delete();
         return response()->json(null, 204);
     }
 }

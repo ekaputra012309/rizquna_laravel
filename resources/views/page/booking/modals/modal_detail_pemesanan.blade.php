@@ -53,6 +53,7 @@
                                 <input type="number" id="subtotal" step="0.01" class="form-control"
                                     placeholder="Sub Total" name="subtotal" data-parsley-required="true" value="0"
                                     readonly />
+                                <input type="hidden" id="user_id_d" class="form-control" name="user_id" />
                             </div>
                         </div>
                     </div>

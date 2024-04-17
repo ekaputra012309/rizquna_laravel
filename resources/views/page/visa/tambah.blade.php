@@ -84,6 +84,8 @@
                                                     name="harga_pax" data-parsley-required="true" />
                                                 <input type="hidden" id="total" class="form-control" placeholder="0"
                                                     name="total" />
+                                                <input type="hidden" id="user_id" class="form-control"
+                                                    name="user_id" />
                                             </div>
                                         </div>
                                     </div>

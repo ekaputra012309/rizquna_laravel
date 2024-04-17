@@ -110,7 +110,8 @@
                                                 <div class="form-group mandatory">
                                                     <label for="malam" class="form-label">Malam</label>
                                                     <input type="number" id="malam" class="form-control"
-                                                        placeholder="0" name="malam" data-parsley-required="true" readonly />
+                                                        placeholder="0" name="malam" data-parsley-required="true"
+                                                        readonly />
                                                 </div>
                                             </div>
                                         </div>
@@ -161,6 +162,8 @@
                                                 <label for="keterangan" class="form-label">Keterangan</label>
                                                 <textarea class="form-control" name="keterangan" id="keterangan" rows="3" placeholder="Keterangan"
                                                     data-parsley-required="true"></textarea>
+                                                <input type="hidden" id="user_id" class="form-control"
+                                                    name="user_id" />
                                             </div>
                                         </div>
                                     </div>

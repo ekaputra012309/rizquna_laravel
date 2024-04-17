@@ -15,6 +15,12 @@ class Rekening extends Model
         'rekening_id',
         'no_rek',
         'keterangan',
+        'user_id',
         // Add other columns as needed
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

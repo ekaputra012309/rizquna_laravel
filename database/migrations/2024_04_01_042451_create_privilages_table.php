@@ -15,9 +15,12 @@ class CreatePrivilagesTable extends Migration
     {
         Schema::create('privilages', function (Blueprint $table) {
             $table->id();
-            $table->string('role_id');
-            $table->string('sidebar_id');
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null'); // Assuming you have a users table
         });
     }
 

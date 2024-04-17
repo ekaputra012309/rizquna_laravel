@@ -18,7 +18,9 @@ class CreateVisaDetailsTable extends Migration
             $table->integer('id_visa');
             $table->dateTime('tgl_payment_visa');
             $table->decimal('deposit', 15, 2);
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

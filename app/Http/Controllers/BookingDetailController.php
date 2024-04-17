@@ -16,14 +16,14 @@ class BookingDetailController extends Controller
 
     public function index()
     {
-        $booking_ds = BookingDetail::with('room')->get();
+        $booking_ds = BookingDetail::with('room', 'user')->get();
         return response()->json($booking_ds);
     }
 
     public function show($id)
     {
         try {
-            $booking_d = BookingDetail::with('room')->find($id);
+            $booking_d = BookingDetail::with('room', 'user')->find($id);
             return response()->json($booking_d);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Detail Booking not found'], 404);

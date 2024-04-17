@@ -27,6 +27,7 @@
                                 <label for="deposit" class="form-label">Deposit</label>
                                 <input type="number" id="deposit" name="deposit" class="form-control"
                                     placeholder="0.00" step="0.01" data-parsley-required="true" />
+                                <input type="hidden" id="user_id" class="form-control" name="user_id" />
                             </div>
                         </div>
                         {{-- <div class="col-md-4 col-12">

@@ -16,6 +16,12 @@ class Hotel extends Model
         'alamat',
         'contact_person',
         'telepon',
+        'user_id',
         // Add other columns as needed
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

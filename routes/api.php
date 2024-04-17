@@ -14,8 +14,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\VisaController;
 use App\Http\Controllers\VisaDetailController;
 use App\Http\Controllers\KursVisaController;
-use App\Http\Controllers\SidebarController;
 use App\Http\Controllers\PrivilageController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -133,20 +134,28 @@ Route::controller(KursVisaController::class)->group(function () {
     Route::post('kurs', 'store');
     Route::get('kurs/{id}', 'show');
 });
-// sidebar
-Route::controller(SidebarController::class)->group(function () {
-    Route::get('sidebar', 'index')->name('sidebar');
-    Route::post('sidebar', 'store');
-    Route::get('sidebar/{id}', 'show');
-    Route::post('sidebar/{id}', 'update');
-    Route::delete('sidebar/{id}', 'destroy');
-});
 // privilage
 Route::controller(PrivilageController::class)->group(function () {
     Route::get('privilage', 'index')->name('privilage');
     Route::post('privilage', 'store');
     Route::get('privilage/{id}', 'show');
-    Route::get('byrole', 'byRole'); //get sidebar by role_id
     Route::post('privilage/{id}', 'update');
     Route::delete('privilage/{id}', 'destroy');
+});
+
+// role
+Route::controller(RoleController::class)->group(function () {
+    Route::get('role', 'index')->name('role');
+    Route::post('role', 'store');
+    Route::get('role/{id}', 'show');
+    Route::post('role/{id}', 'update');
+    Route::delete('role/{id}', 'destroy');
+});
+// user
+Route::controller(UserController::class)->group(function () {
+    Route::get('user', 'index')->name('user');
+    Route::post('user', 'store');
+    Route::get('user/{id}', 'show');
+    Route::post('user/{id}', 'update');
+    Route::delete('user/{id}', 'destroy');
 });

@@ -14,10 +14,16 @@ class VisaDetail extends Model
         'id_visa',
         'tgl_payment_visa',
         'deposit',
+        'user_id',
     ];
     // Define the relationship with visa
     public function visa()
     {
         return $this->belongsTo(Visa::class, 'id_visa');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

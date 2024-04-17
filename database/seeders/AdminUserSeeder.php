@@ -17,11 +17,18 @@ class AdminUserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Admin PT Rizquna',
-                'email' => 'admin@gmail.com',
+                'name' => 'Super Admin',
+                'email' => 'admin123@gmail.com',
                 'password' => Hash::make('admindemo')
             ]
         ];
+        // $users = [
+        //     [
+        //         'name' => 'Admin PT Rizquna',
+        //         'email' => 'admin@gmail.com',
+        //         'password' => Hash::make('admindemo')
+        //     ]
+        // ];
 
         // Looping and Inserting Array's Users into User Table
         foreach ($users as $user) {

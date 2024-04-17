@@ -21,7 +21,9 @@ class CreatePaymentsTable extends Migration
             $table->decimal('sar_usd', 10, 2);
             $table->decimal('usd_idr', 10, 2);
             $table->decimal('hasil_konversi', 15, 2);
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

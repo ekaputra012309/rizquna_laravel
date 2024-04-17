@@ -40,6 +40,8 @@
                     $('#check_out').val(formatDate(response.check_out));
                     $('#mata_uang').val(response.mata_uang);
                     $('#keterangan').val(response.keterangan);
+                    $('#user_id').val(response.user_id);
+                    $('#user_id_d').val(response.user_id);
                 },
 
                 error: function(xhr, status, error) {

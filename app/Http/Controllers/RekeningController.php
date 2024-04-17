@@ -18,7 +18,7 @@ class RekeningController extends Controller
     {
         $rekening_id = $request->input('rekening_id');
 
-        $rekenings = Rekening::when($rekening_id, function ($query) use ($rekening_id) {
+        $rekenings = Rekening::with('user')->when($rekening_id, function ($query) use ($rekening_id) {
             return $query->where('rekening_id', 'like', '%' . $rekening_id . '%');
         })->get();
 
@@ -28,7 +28,7 @@ class RekeningController extends Controller
     public function show($id)
     {
         try {
-            $rekening = Rekening::find($id);
+            $rekening = Rekening::with('user')->find($id);
             return response()->json($rekening);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Rekening not found'], 404);

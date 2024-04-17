@@ -16,14 +16,14 @@ class HotelController extends Controller
 
     public function index()
     {
-        $hotels = Hotel::all();
+        $hotels = Hotel::with('user')->get();
         return response()->json($hotels);
     }
 
     public function show($id)
     {
         try {
-            $hotel = Hotel::find($id);
+            $hotel = Hotel::with('user')->find($id);
             return response()->json($hotel);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Hotel not found'], 404);

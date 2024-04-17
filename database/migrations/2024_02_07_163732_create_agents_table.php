@@ -19,7 +19,9 @@ class CreateAgentsTable extends Migration
             $table->string('alamat');
             $table->string('contact_person');
             $table->string('telepon');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

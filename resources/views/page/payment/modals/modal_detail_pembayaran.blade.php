@@ -41,6 +41,7 @@
                                     </div>
                                     <input type="hidden" id="metode_bayar" name="metode_bayar" value="Tunai">
                                     <label class="form-check-label" for="metode_bayar_toggle">Kredit</label>
+                                    <input type="hidden" id="user_id" class="form-control" name="user_id" />
                                 </div>
                             </div>
                         </div>

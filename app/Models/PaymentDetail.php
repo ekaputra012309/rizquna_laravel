@@ -15,10 +15,16 @@ class PaymentDetail extends Model
         'tgl_payment',
         'deposit',
         'metode_bayar',
+        'user_id',
     ];
     // Define the relationship with payment
     public function payment()
     {
         return $this->belongsTo(Payment::class, 'id_payment');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

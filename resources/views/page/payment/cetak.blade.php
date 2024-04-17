@@ -175,11 +175,15 @@
                 </tr>
                 <tr>
                     <th colspan="3"><span id="deposito"></span></th>
-                    <th colspan="2" style="text-align: right"><span id="hasildeposito"></span></th>
+                    <th style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)"><span id="kode1"></span>
+                    </th>
+                    <th style="text-align: right"><span id="hasildeposito"></span></th>
                 </tr>
                 <tr>
                     <th colspan="3"><span id="sstatus">TEST</span></th>
-                    <th colspan="2" style="text-align: right"><span id="sisadeposit"></span></th>
+                    <th style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)"><span
+                            id="kode2">sar</span></th>
+                    <th style="text-align: right"><span id="sisadeposit"></span></th>
                 </tr>
             </tfoot>
         </table>
@@ -280,6 +284,13 @@
                             $('#totalusd').html(formatCurrencyID(ttlusd));
                             $('#totalidr').html(formatCurrencyID(ttlidr));
                             $('#sstatus').html(response.booking.status);
+                            if (response.pilih_konversi == 'USD') {
+                                $('#kode2').html('$');
+                            } else if (response.pilih_konversi == 'SAR') {
+                                $('#kode2').html('SAR');
+                            } else {
+                                $('#kode2').html('IDR');
+                            }
 
                             var detailpay = response.detailpay;
                             var sumDeposit = 0;
@@ -303,6 +314,14 @@
                                 hasildepositSpan.append('<span id="hasildeposito' + (index +
                                         1) + '">' + formatCurrencyID(detail.deposit) +
                                     '</span><br>');
+                                var kodeSpan = $('#kode1');
+                                if (response.pilih_konversi == 'USD') {
+                                    kodeSpan.append('$ <br>');
+                                } else if (response.pilih_konversi == 'SAR') {
+                                    kodeSpan.append('SAR <br>');
+                                } else {
+                                    kodeSpan.append('IDR <br>');
+                                }
                             });
 
                             // Calculate sisaDeposit

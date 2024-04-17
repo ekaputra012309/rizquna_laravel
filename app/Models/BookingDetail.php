@@ -18,6 +18,7 @@ class BookingDetail extends Model
         'tarif',
         'discount',
         'subtotal',
+        'user_id',
     ];
 
     // Define the inverse relationship with Booking
@@ -30,5 +31,10 @@ class BookingDetail extends Model
     public function room()
     {
         return $this->belongsTo(Room::class, 'room_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -57,6 +57,7 @@
                                                 <label for="telepon-column" class="form-label">Telepon</label>
                                                 <input type="number" id="telepon" class="form-control" name="telepon"
                                                     placeholder="Telepon" data-parsley-required="true" />
+                                                <input type="hidden" id="user_id" class="form-control" name="user_id" />
                                             </div>
                                         </div>
                                     </div>

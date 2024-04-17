@@ -19,6 +19,7 @@ class Visa extends Model
         'harga_pax',
         'total',
         'status',
+        'user_id',
     ];
 
     // Define the relationship with VisaDetail
@@ -33,5 +34,10 @@ class Visa extends Model
     public function kurs()
     {
         return $this->belongsTo(KursVisa::class, 'id_visa', 'id_visa');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

@@ -39,6 +39,7 @@
                                                 <input type="text" id="keterangan" class="form-control"
                                                     placeholder="Keterangan" name="keterangan"
                                                     data-parsley-required="true" />
+                                                <input type="hidden" id="user_id" class="form-control" name="user_id" />
                                             </div>
                                         </div>
                                     </div>

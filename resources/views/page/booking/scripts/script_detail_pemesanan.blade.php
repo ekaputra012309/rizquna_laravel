@@ -33,6 +33,7 @@
                         $('#detailPemesananForm')[0].reset();
                         $('#detailPemesananModal').modal('hide');
                         refreshTable();
+                        location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error(error);

@@ -17,6 +17,7 @@ class Payment extends Model
         'sar_usd',
         'usd_idr',
         'hasil_konversi',
+        'user_id',
     ];
     // Define the relationship with booking
     public function booking()
@@ -27,5 +28,10 @@ class Payment extends Model
     public function detailpay()
     {
         return $this->hasMany(PaymentDetail::class, 'id_payment', 'id_payment');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

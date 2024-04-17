@@ -54,6 +54,7 @@
                                                 <label for="telepon-column" class="form-label">Telepon</label>
                                                 <input type="number" id="telepon" class="form-control" name="telepon"
                                                     placeholder="Telepon" data-parsley-required="true" />
+                                                <input type="hidden" id="user_id" class="form-control" name="user_id" />
                                             </div>
                                         </div>
                                     </div>
@@ -103,6 +104,7 @@
                         $('#alamat').val(response.alamat);
                         $('#contact_person').val(response.contact_person);
                         $('#telepon').val(response.telepon);
+                        $('#user_id').val(response.user_id);
                     },
                     error: function(xhr, status, error) {
                         // Handle error

@@ -14,12 +14,19 @@ class KursVisa extends Model
         'id_visa',
         'kurs_bsi',
         'kurs_riyal',
+        'pilih_konversi',
         'hasil_konversi',
         'status',
+        'user_id',
     ];
 
     public function visa()
     {
         return $this->belongsTo(Visa::class, 'id_visa');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

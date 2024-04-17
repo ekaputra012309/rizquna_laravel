@@ -45,6 +45,15 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('visa/edit/{id}', [PagesController::class, 'editVisa'])->name('visa.edit');
     Route::get('visa/lihat/{id}', [PagesController::class, 'lihatVisa'])->name('visa.lihat');
     Route::get('visa/cetak/{id}', [PagesController::class, 'cetakVisa'])->name('visa.cetak');
+    Route::get('role', [PagesController::class, 'role'])->name('role');
+    Route::get('role/tambah', [PagesController::class, 'tambahRole'])->name('role.tambah');
+    Route::get('role/edit/{id}', [PagesController::class, 'editRole'])->name('role.edit');
+    Route::get('user', [PagesController::class, 'user'])->name('user.management');
+    Route::get('user/tambah', [PagesController::class, 'tambahUser'])->name('user.tambah');
+    Route::get('user/edit/{id}', [PagesController::class, 'editUser'])->name('user.edit');
+    Route::get('privilage', [PagesController::class, 'privilage'])->name('privilage');
+    Route::get('privilage/tambah', [PagesController::class, 'tambahPrivilage'])->name('privilage.tambah');
+    Route::get('privilage/edit/{id}', [PagesController::class, 'editPrivilage'])->name('privilage.edit');
 });
 
 Route::get('/check-session', function () {

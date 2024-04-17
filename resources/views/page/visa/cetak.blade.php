@@ -132,13 +132,15 @@
                 </tr>
                 <tr>
                     <th colspan="2"><span id="deposito"></span></th>
-                    <th style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)"><span id="rupiah"></span>
+                    <th style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)"><span id="kode1"></span>
+                    </th>
                     </th>
                     <th style="text-align: right"><span id="hasildeposito"></span></th>
                 </tr>
                 <tr>
                     <th colspan="2"><span id="sstatus">TEST</span></th>
-                    <th style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)">IDR</th>
+                    <th style="text-align: left; border-right: 1px solid rgba(0, 0, 0, 0)"><span id="kode2"></span>
+                    </th>
                     <th style="text-align: right"><span id="sisadeposit">-</span></th>
                 </tr>
             </tfoot>
@@ -229,6 +231,11 @@
                             $('#noinvoice').html(response.visa_id);
                             $('#tglinvoice').html(formatDate(response.tgl_visa));
                             $('#sstatus').html(response.status);
+                            if (response.kurs.pilih_konversi == 'USD') {
+                                $('#kode2').html('$');
+                            } else {
+                                $('#kode2').html('IDR');
+                            }
 
                             var detailpay = response.details;
                             var sumDeposit = 0;
@@ -245,15 +252,21 @@
                                 depositSpan.append('<span id="deposit' + (index + 1) +
                                     '">Deposit ' + (index + 1) + ' ' + formatDate2(detail
                                         .tgl_payment_visa) + '</span><br>');
-                                var rupiahSpan = $('#rupiah');
-                                rupiahSpan.append('<span id="rupiah' + (index + 1) +
-                                    '">IDR</span><br>');
+                                // var rupiahSpan = $('#rupiah');
+                                // rupiahSpan.append('<span id="rupiah' + (index + 1) +
+                                //     '">IDR</span><br>');
 
                                 // Update the content of the hasildeposito span with formatted deposit value
                                 var hasildepositSpan = $('#hasildeposito');
                                 hasildepositSpan.append('<span id="hasildeposito' + (index +
                                         1) + '">' + formatCurrencyID(detail.deposit) +
                                     '</span><br>');
+                                var kodeSpan = $('#kode1');
+                                if (response.kurs.pilih_konversi == 'USD') {
+                                    kodeSpan.append('$ <br>');
+                                } else {
+                                    kodeSpan.append('IDR <br>');
+                                }
                             });
                             // Calculate sisaDeposit
                             sisaDeposit = parseFloat(response.kurs.hasil_konversi) - sumDeposit;

@@ -53,6 +53,18 @@
                                 </div>
                                 <div class="col-md-2 col-12">
                                     <div class="form-group mandatory">
+                                        <label for="pilih_konversi" class="form-label">Pilih</label>
+                                        <select id="pilih_konversi" name="pilih_konversi" class="form-select"
+                                            data-parsley-required="true">
+                                            <option value="">Pilih</option>
+                                            <option value="USD">USD</option>
+                                            <option value="IDR">IDR</option>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" id="user_id" class="form-control" name="user_id" />
+                                </div>
+                                <div class="col-md-2 col-12">
+                                    <div class="form-group mandatory">
                                         <br>
                                         <button type="submit" class="btn btn-primary me-1 mb-1">
                                             <i class="bi bi-save"></i> Save
@@ -283,11 +295,26 @@
                 return roundedValue.toLocaleString('id-ID');
             }
 
-            $('#kurs_bsi').on('keyup', function() {
-                var kurs_bsi = parseFloat($(this).val());
+            // $('#kurs_bsi').on('change', function() {
+            //     var kurs_bsi = parseFloat($(this).val());
+            //     var tagihan_awal = parseFloat($('#total').val());
+            //     var tagihan = tagihan_awal * kurs_bsi;
+            //     $('#hasil_konversi').val(tagihan);
+            // });
+
+            $('#pilih_konversi').on('change', function() {
+                var selectedCurrency = $(this).val();
                 var tagihan_awal = parseFloat($('#total').val());
-                var tagihan = tagihan_awal * kurs_bsi;
-                $('#hasil_konversi').val(tagihan);
+
+                if (selectedCurrency === "USD") {
+                    // If USD is selected, set the result equal to the original amount
+                    $('#hasil_konversi').val(tagihan_awal);
+                } else {
+                    // For other currencies, multiply the original amount by the exchange rate
+                    var kurs_bsi = parseFloat($('#kurs_bsi').val());
+                    var tagihan = tagihan_awal * kurs_bsi;
+                    $('#hasil_konversi').val(tagihan);
+                }
             });
         });
     </script>

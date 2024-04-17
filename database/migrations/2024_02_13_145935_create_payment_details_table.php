@@ -19,7 +19,9 @@ class CreatePaymentDetailsTable extends Migration
             $table->dateTime('tgl_payment');
             $table->decimal('deposit', 15, 2);
             $table->string('metode_bayar');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

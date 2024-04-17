@@ -118,73 +118,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
-                        <li class="sidebar-item active">
-                            <a href="{{ route('p.dash') }}" class="sidebar-link">
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item has-sub">
-                            <a href="#" class="sidebar-link">
-                                <i class="bi bi-stack"></i>
-                                <span>Master Data</span>
-                            </a>
-
-                            <ul class="submenu">
-                                <li class="submenu-item">
-                                    <a href="{{ route('p.agent') }}" class="submenu-link">Agent</a>
-                                </li>
-                                <li class="submenu-item">
-                                    <a href="{{ route('p.hotel') }}" class="submenu-link">Hotel</a>
-                                </li>
-                                <li class="submenu-item">
-                                    <a href="{{ route('p.room') }}" class="submenu-link">Room</a>
-                                </li>
-                                <li class="submenu-item">
-                                    <a href="{{ route('p.rekening') }}" class="submenu-link">Rekening</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-title">Transaction</li>
-
-                        <li class="sidebar-item">
-                            <a href="{{ route('p.booking') }}" class="sidebar-link">
-                                <i class="bi bi-building-fill-check"></i>
-                                <span>Booking Hotels</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a href="{{ route('p.payment') }}" class="sidebar-link">
-                                <i class="bi bi-credit-card-fill"></i>
-                                <span>Payment Hotels</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a href="{{ route('p.visa') }}" class="sidebar-link">
-                                <i class="bi bi-credit-card-2-front-fill"></i>
-                                <span>Payment Visa</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-title">Report</li>
-
-                        <li class="sidebar-item">
-                            <a href="{{ route('p.report.agent') }}" class="sidebar-link">
-                                <i class="bi bi-people-fill"></i>
-                                <span>Report Agent</span>
-                            </a>
-                        </li>
-
-                    </ul>
+                {{-- @include('layouts.sidebar.superadmin') --}}
+                <div id="superadmin-sidebar">
+                    @include('layouts.sidebar.superadmin')
                 </div>
+                <div id="admin-sidebar">
+                    @include('layouts.sidebar.admin')
+                </div>
+                <div id="visa-sidebar">
+                    @include('layouts.sidebar.visa')
+                </div>
+                <div id="marketing-sidebar">
+                    @include('layouts.sidebar.marketing')
+                </div>
+                <div id="finance-sidebar">
+                    @include('layouts.sidebar.finance')
+                </div>
+                <div id="guest-sidebar">
+                    @include('layouts.sidebar.guest')
+                </div>
+
+
             </div>
         </div>
         <div id="main">
@@ -267,12 +221,12 @@
 
     <script>
         $(document).ready(function() {
-
+            var jwtToken = localStorage.getItem('jwtToken');
             checkTokenExpiration();
             getUser();
 
             function getUser() {
-                var jwtToken = localStorage.getItem('jwtToken');
+
                 $.ajax({
                     url: "{{ route('userProfile') }}",
                     type: "GET",
@@ -281,7 +235,50 @@
                         'Authorization': 'Bearer ' + jwtToken
                     },
                     success: function(response) {
-                        $('#emailUser').html(response.name)
+                        $('#emailUser').html(response.name);
+                        $('#user_id').val(response.id);
+                        $('#user_id_d').val(response.id);
+                        var role = response.privilage[0].role_id;
+                        getRole(role);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                });
+            }
+
+            function getRole($id) {
+
+                $.ajax({
+                    url: "{{ route('role') }}/" + $id,
+                    type: "GET",
+                    headers: {
+                        // Include authorization header with JWT token
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                    success: function(response) {
+                        $('#superadmin-sidebar').hide();
+                        $('#admin-sidebar').hide();
+                        $('#visa-sidebar').hide();
+                        $('#marketing-sidebar').hide();
+                        $('#finance-sidebar').hide();
+                        $('#guest-sidebar').hide();
+
+                        // Show the appropriate sidebar based on response.kode_role
+                        if (response.kode_role === 'superadmin') {
+                            $('#superadmin-sidebar').show();
+                        } else if (response.kode_role === 'admin') {
+                            $('#admin-sidebar').show();
+                        } else if (response.kode_role === 'visa') {
+                            $('#visa-sidebar').show();
+                        } else if (response.kode_role === 'marketing') {
+                            $('#marketing-sidebar').show();
+                        } else if (response.kode_role === 'finance') {
+                            $('#finance-sidebar').show();
+                        } else {
+                            $('#guest-sidebar').show();
+                        }
                     },
                     error: function(xhr, status, error) {
                         // Handle error
@@ -292,7 +289,7 @@
             // logout button
             $('#logoutButton').click(function() {
                 // Retrieve JWT token from localStorage
-                var jwtToken = localStorage.getItem('jwtToken');
+
 
                 // Check if JWT token exists
                 if (jwtToken) {

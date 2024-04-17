@@ -27,7 +27,9 @@ class CreateBookingsTable extends Migration
             $table->decimal('total_discount', 10, 2);
             $table->decimal('total_subtotal', 10, 2);
             $table->enum('status', ['Piutang', 'Lunas'])->default('Piutang');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

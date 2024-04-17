@@ -21,7 +21,7 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         // Query builder
-        $query = Booking::with('agent', 'hotel', 'details');
+        $query = Booking::with('agent', 'hotel', 'details', 'user');
 
         // Apply conditions based on request parameters
         if ($request->filled('tgl_from')) {
@@ -63,7 +63,7 @@ class BookingController extends Controller
     public function show($id)
     {
         try {
-            $booking = Booking::with('agent', 'hotel', 'details')->find($id);
+            $booking = Booking::with('agent', 'hotel', 'details', 'user')->find($id);
             return response()->json($booking);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Booking not found'], 404);

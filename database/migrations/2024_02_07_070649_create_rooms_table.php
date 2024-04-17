@@ -17,7 +17,9 @@ class CreateRoomsTable extends Migration
             $table->increments('id_kamar');
             $table->string('kamar_id');
             $table->string('keterangan');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

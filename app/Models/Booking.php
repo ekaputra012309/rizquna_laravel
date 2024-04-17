@@ -22,6 +22,7 @@ class Booking extends Model
         'keterangan',
         'total_discount',
         'total_subtotal',
+        'user_id',
     ];
 
     // Define the relationship with BookingDetail
@@ -38,5 +39,10 @@ class Booking extends Model
     public function hotel()
     {
         return $this->belongsTo(Hotel::class, 'hotel_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

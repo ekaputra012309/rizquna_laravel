@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Payment;
 use App\Models\Visa;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\Privilage;
 
 class PagesController extends Controller
 {
@@ -387,5 +390,110 @@ class PagesController extends Controller
         );
 
         return view('page.visa.cetak', compact('data'));
+    }
+
+    public function role()
+    {
+        $pageTitle = 'Role - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.role.role', compact('data'));
+    }
+
+    public function tambahRole()
+    {
+
+        $pageTitle = 'Add Role - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.role.tambah', compact('data'));
+    }
+
+    public function editRole($id)
+    {
+
+        $pageTitle = 'Edit Role - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+        );
+
+        return view('page.role.edit', compact('data'));
+    }
+
+    public function user()
+    {
+        $pageTitle = 'User Management - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.user.user', compact('data'));
+    }
+
+    public function tambahUser()
+    {
+
+        $pageTitle = 'Add User - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.user.tambah', compact('data'));
+    }
+
+    public function editUser($id)
+    {
+
+        $pageTitle = 'Edit User - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+        );
+
+        return view('page.user.edit', compact('data'));
+    }
+
+    public function privilage()
+    {
+        $pageTitle = 'Privilage - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.privilage.privilage', compact('data'));
+    }
+
+    public function tambahprivilage()
+    {
+        $user = User::all();
+        $roles = Role::all();
+        $filteredRoles = $roles->reject(function ($role) {
+            return $role->kode_role === 'superadmin';
+        });
+        $pageTitle = 'Add Privilage - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'user' => $user,
+            'role' => $filteredRoles,
+        );
+        return view('page.privilage.tambah', compact('data'));
+    }
+
+    public function editprivilage($id)
+    {
+        $user = User::all();
+        $roles = Role::all();
+        $filteredRoles = $roles->reject(function ($role) {
+            return $role->kode_role === 'superadmin';
+        });
+        $pageTitle = 'Edit Privilage - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+            'user' => $user,
+            'role' => $filteredRoles,
+        );
+
+        return view('page.privilage.edit', compact('data'));
     }
 }

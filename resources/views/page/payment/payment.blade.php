@@ -102,6 +102,7 @@
                                     <input type="hidden" id="hasil_konversi" name="hasil_konversi"
                                         class="form-control">
                                     <input type="text" id="hasil_konversi1" class="form-control" readonly>
+                                    <input type="hidden" id="user_id" class="form-control" name="user_id" />
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">

@@ -18,9 +18,12 @@ class CreateKursVisasTable extends Migration
             $table->integer('id_visa');
             $table->decimal('kurs_bsi', 10, 2);
             $table->decimal('kurs_riyal', 10, 2);
+            $table->string('pilih_konversi');
             $table->decimal('hasil_konversi', 15, 2);
             $table->enum('status', ['0', '1'])->default('0');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
