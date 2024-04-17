@@ -157,5 +157,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('user', 'store');
     Route::get('user/{id}', 'show');
     Route::post('user/{id}', 'update');
+    Route::post('user_reset/{id}', 'resetPassword')->name('user.reset');
+    Route::post('user_change/{id}', 'changePassword')->name('user.change');
     Route::delete('user/{id}', 'destroy');
 });

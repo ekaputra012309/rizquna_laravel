@@ -148,10 +148,14 @@
                         aria-expanded="false">
                         <span id="emailUser">PT Rizquna</span> <img src={{ asset('./assets/compiled/png/logo.png') }}
                             alt="Profile Picture" class="profile-picture">
+                        <input type="hidden" id="id_user">
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="profileDropdownTrigger">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-shield-lock"></i> Change
-                                Password</a></li>
+                        <li>
+                            <a class="dropdown-item" href="#" id="changePasswordTrigger">
+                                <i class="bi bi-shield-lock"></i> Change Password
+                            </a>
+                        </li>
                         <li><a class="dropdown-item" id="logoutButton" href="#"><i
                                     class="bi bi-box-arrow-right"></i> Logout</a>
                         </li>
@@ -201,6 +205,45 @@
             </div>
         </div>
         {{-- end modal notif --}}
+
+        {{-- modal change password --}}
+        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+            aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="changePasswordForm">
+                        <div class="modal-body">
+                            <!-- Add input fields for the new password and confirm password -->
+                            <div class="form-group">
+                                <label for="password">New Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" required>
+                            </div>
+                            <!-- Add toggle for password visibility -->
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="showPassword">
+                                <label class="form-check-label" for="showPassword">Show Password</label>
+                            </div>
+                            <!-- Add any other necessary fields -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{-- end modal change password --}}
     </div>
     <script src={{ asset('assets/static/js/components/dark.js') }}></script>
     <script src={{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}></script>
@@ -238,6 +281,7 @@
                         $('#emailUser').html(response.name);
                         $('#user_id').val(response.id);
                         $('#user_id_d').val(response.id);
+                        $('#id_user').val(response.id);
                         var role = response.privilage[0].role_id;
                         getRole(role);
                     },
@@ -315,6 +359,57 @@
                     // Handle case where JWT token is not found in localStorage
                     console.error('JWT token not found in localStorage.');
                 }
+            });
+
+            $("#changePasswordTrigger").click(function() {
+                $("#changePasswordModal").modal("show");
+            });
+
+            // Toggle password visibility
+            $("#showPassword").change(function() {
+                var newPasswordInput = $("#password");
+                var confirmPasswordInput = $("#confirmPassword");
+                if ($(this).is(":checked")) {
+                    newPasswordInput.attr("type", "text");
+                    confirmPasswordInput.attr("type", "text");
+                } else {
+                    newPasswordInput.attr("type", "password");
+                    confirmPasswordInput.attr("type", "password");
+                }
+            });
+
+            // Form submission
+            $("#changePasswordForm").submit(function(event) {
+                var userId = $('#id_user').val();
+                event.preventDefault();
+                var newPassword = $("#password").val();
+                var confirmPassword = $("#confirmPassword").val();
+
+                // Ensure both passwords match
+                if (newPassword !== confirmPassword) {
+                    alert("Passwords do not match.");
+                    return;
+                }
+
+                // Your AJAX submission code here
+                $.ajax({
+                    url: "{{ route('user.change', ['id' => ':id']) }}"
+                        .replace(':id', userId),
+                    type: "POST",
+                    headers: {
+                        // Include authorization header with JWT token
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        alert("Password changed successfully.");
+                        $("#changePasswordModal").modal("hide");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("An error occurred while changing the password.");
+                        console.error(xhr.responseText);
+                    }
+                });
             });
         });
     </script>

@@ -72,7 +72,10 @@
                             '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="bi bi-pencil-square"></i></a> ' +
                             '<button class="btn btn-danger btn-sm delete-btn" data-id="' + user
                             .id +
-                            '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button>' +
+                            '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus"><i class="bi bi-trash"></i></button> ' +
+                            '<button class="btn btn-success btn-sm reset-btn" data-id="' + user
+                            .id +
+                            '" data-bs-toggle="tooltip" data-bs-placement="top" title="Reset Password"><i class="bi bi-arrow-clockwise"></i> Reset Password</button>' +
                             '<td>' + user.name + '</td>' +
                             '<td>' + user.email + '</td>' +
                             '</tr>';
@@ -100,6 +103,34 @@
                                 success: function(response) {
                                     // Reload the page or update the table as needed
                                     alert('user deleted successfully!');
+                                    location
+                                        .reload(); // Reload the page after deletion
+                                },
+                                error: function(xhr, status, error) {
+                                    alert(
+                                        'An error occurred while deleting the user.'
+                                    );
+                                    console.error(xhr.responseText);
+                                }
+                            });
+                        }
+                    });
+
+                    // Add click event listener to reset buttons
+                    $('.reset-btn').click(function() {
+                        var userId = $(this).data('id');
+                        if (confirm('Are you sure you want to reset this user password ?')) {
+                            // Perform deletion using AJAX
+                            $.ajax({
+                                url: "{{ route('user.reset', ['id' => ':id']) }}"
+                                    .replace(':id', userId),
+                                type: "POST",
+                                headers: {
+                                    'Authorization': 'Bearer ' + token
+                                },
+                                success: function(response) {
+                                    // Reload the page or update the table as needed
+                                    alert('reset password successfully!');
                                     location
                                         .reload(); // Reload the page after deletion
                                 },

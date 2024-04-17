@@ -64,4 +64,31 @@ class UserController extends Controller
             return response()->json(['error' => 'User Not Found'], 404);
         }
     }
+
+    public function resetPassword($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->update([
+                'password' => Hash::make('12345678')
+            ]);
+            return response()->json(['message' => 'Password reset successfully'], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->update([
+                'password' => Hash::make($request->password)
+            ]);
+
+            return response()->json(['message' => 'Password changed successfully'], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
 }

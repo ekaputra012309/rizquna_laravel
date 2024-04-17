@@ -20,7 +20,7 @@ class CreatePrivilagesTable extends Migration
             $table->timestamps();
 
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null'); // Assuming you have a users table
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
