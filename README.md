@@ -1,7 +1,5 @@
 ## Preview
-- ![login page](https://github.com/ekaputra012309/rizquna_laravel/assets/88359335/63308692-c5f7-4705-b4b4-06c0e6749b52)
-- ![dashboard page](https://github.com/ekaputra012309/rizquna_laravel/assets/88359335/39762596-1f23-4db1-a5cf-0f2b6d6ed6ab)
-- ![user management](https://github.com/ekaputra012309/rizquna_laravel/assets/88359335/b445b891-54f5-4861-8044-1561cbd4732e)
+| ![login page](https://github.com/ekaputra012309/rizquna_laravel/assets/88359335/63308692-c5f7-4705-b4b4-06c0e6749b52) | ![dashboard page](https://github.com/ekaputra012309/rizquna_laravel/assets/88359335/39762596-1f23-4db1-a5cf-0f2b6d6ed6ab) | ![user management](https://github.com/ekaputra012309/rizquna_laravel/assets/88359335/b445b891-54f5-4861-8044-1561cbd4732e) |  
 
 ## How to use !
 1. Create folder rizquna in your root folder.
