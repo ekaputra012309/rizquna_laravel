@@ -10,9 +10,9 @@
    ```composer install```
    
 7. Then copy or rename .env.example to .env
-8. Create new database rizquna and change this line
-before DB_DATABASE=testaja
-after DB_DATABASE=rizquna
+8. Create new database rizquna and change this line  
+before DB_DATABASE=testaja  
+after DB_DATABASE=rizquna  
 10. Run migration with this below code.
     
     ```php artisan migrate```
