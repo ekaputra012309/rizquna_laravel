@@ -14,6 +14,7 @@ class RolesTableSeeder extends Seeder
             ['kode_role' => 'admin', 'nama_role' => 'Administrator'],
             ['kode_role' => 'marketing', 'nama_role' => 'Marketing'],
             ['kode_role' => 'finance', 'nama_role' => 'Finance'],
+            ['kode_role' => 'visa', 'nama_role' => 'Visa'],
             // Add more roles as needed
         ];
 
