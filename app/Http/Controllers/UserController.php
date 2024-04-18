@@ -17,9 +17,10 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::where('email', '!=', 'admin123@gmail.com')->get();
         return response()->json($users);
     }
+
 
     public function show($id)
     {

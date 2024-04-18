@@ -20,6 +20,11 @@ class AdminUserSeeder extends Seeder
                 'name' => 'Super Admin',
                 'email' => 'admin123@gmail.com',
                 'password' => Hash::make('admindemo')
+            ],
+            [
+                'name' => 'Admin PT Rizquna',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('admindemo')
             ]
         ];
         // $users = [
