@@ -98,6 +98,21 @@
                 </div>
             </div>
             <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-end">
+                        <div class="col-md-4">
+                            <label for="tgl_filter" class="form-label">Filter Tanggal Keberangkatan</label>
+                            <input type="date" id="tgl_filter" class="form-control" placeholder="Filter Tanggal Berangkat">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label d-block">&nbsp;</label> <!-- For spacing -->
+                            <button type="button" id="btnFilter" class="btn btn-success me-2">Filter</button>
+                            <button type="button" id="btnClear" class="btn btn-secondary">Clear</button>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table" id="table1">
@@ -162,27 +177,31 @@
                 }).format(angka);
             }
 
-            function loadJamaahTable() {
+            function loadJamaahTable(tgl_berangkat = '') {
+                let url = "{{ route('jamaah') }}?cabang_id={{ $cabangId }}";
+                if (tgl_berangkat) {
+                    url += `&tgl_berangkat=${tgl_berangkat}`;
+                }
+
                 $.ajax({
-                    url: "{{ route('jamaah') }}?cabang_id={{ $cabangId }}",
+                    url: url,
                     type: "GET",
                     headers: {
                         'Authorization': 'Bearer ' + token
                     },
                     success: function (data) {
-                        dataTable.clear().draw(); // Clear existing data
+                        dataTable.clear().draw();
 
                         $.each(data, function (index, jamaah) {
-                            var editHref = "{{ route('p.jamaah.edit', ['id' => ':id']) }}";
                             var jamaahIdBase64 = btoa(jamaah.id);
-                            editHref = editHref.replace(':id', jamaahIdBase64);
+                            var editHref = "{{ route('p.jamaah.edit', ['id' => ':id']) }}".replace(':id', jamaahIdBase64);
 
                             dataTable.row.add([
                                 index + 1,
                                 jamaah.nama,
                                 jamaah.alamat,
                                 jamaah.phone,
-                                formatRupiah(jamaah.dp)?? "-",
+                                formatRupiah(jamaah.dp) ?? "-",
                                 formatTanggalIndo(jamaah.tgl_berangkat),
                                 '<button type="button" class="btn btn-primary btn-sm edit-btn" data-id="' + jamaah.id + '" title="Edit"><i class="bi bi-pencil-square"></i></button> ' +
                                 '<button class="btn btn-danger btn-sm delete-btn" data-id="' + jamaah.id + '" title="Hapus"><i class="bi bi-trash"></i></button> ' +
@@ -192,6 +211,16 @@
                     }
                 });
             }
+
+            $('#btnFilter').on('click', function () {
+                const tglFilter = $('#tgl_filter').val();
+                loadJamaahTable(tglFilter);
+            });
+
+            $('#btnClear').on('click', function () {
+                $('#tgl_filter').val('');
+                loadJamaahTable();
+            });
 
             // Initial load
             loadJamaahTable();

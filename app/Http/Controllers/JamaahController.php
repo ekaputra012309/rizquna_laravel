@@ -16,11 +16,21 @@ class JamaahController extends Controller
 
     public function index(Request $request)
     {
-        $query = Jamaah::with('user');
-        if ($request->has('cabang_id')) {
-            $query->where('cabang_id', $request->cabang_id);
+        $cabangId = $request->input('cabang_id');
+        $tgl = $request->input('tgl_berangkat');
+
+        $query = Jamaah::query();
+
+        if ($cabangId) {
+            $query->where('cabang_id', $cabangId);
         }
+
+        if ($tgl) {
+            $query->whereDate('tgl_berangkat', $tgl);
+        }
+
         $jamaahs = $query->get();
+
         return response()->json($jamaahs);
     }
 
