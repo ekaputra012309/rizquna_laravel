@@ -8,6 +8,9 @@ use App\Models\Visa;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Privilage;
+use App\Models\Cabang;
+use App\Models\Jamaah;
+use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
@@ -495,5 +498,62 @@ class PagesController extends Controller
         );
 
         return view('page.privilage.edit', compact('data'));
+    }
+
+    // 09 April 2025
+    public function cabang()
+    {
+
+        $pageTitle = 'Cabang - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.cabang.cabang', compact('data'));
+    }
+
+    public function tambahCabang()
+    {
+
+        $pageTitle = 'Add Cabang - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.cabang.tambah', compact('data'));
+    }
+
+    public function editCabang($id)
+    {
+
+        $pageTitle = 'Edit Cabang - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+        );
+
+        return view('page.cabang.edit', compact('data'));
+    }
+
+    public function bcabang(Request $request)
+    {
+        $cabangId = $request->input('cabang');
+        $cabang = Cabang::find($cabangId);
+        $pageTitle = $cabang ? 'B2C - ' . $cabang->nama_cabang : 'B2C - PT RIZQUNA MEKAH MADINAH';       
+        
+        // $cabangs = $cabangId ? $cabangs = Jamaah::where('cabang_id', $cabangId)->get() : Cabang::all();
+        $cabangs = $cabangId
+            ? Cabang::where('id', $cabangId)->withCount('jamaah')->get()
+            : Cabang::withCount('jamaah')->get();
+
+        $cabangsWithColors = $cabangs->map(function ($cabang) {
+            $cabang->randomColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));  // Random color
+            return $cabang;
+        });
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'cabangs' => $cabangsWithColors,
+            'cabangId' => $cabangId,
+            'namacabang' => $cabang->nama_cabang ?? '',
+        );
+        return view($cabangId ? 'page.cabang.b2cabang' : 'page.cabang.b2c', $data);
     }
 }

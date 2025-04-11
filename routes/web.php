@@ -54,6 +54,15 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('privilage', [PagesController::class, 'privilage'])->name('privilage');
     Route::get('privilage/tambah', [PagesController::class, 'tambahPrivilage'])->name('privilage.tambah');
     Route::get('privilage/edit/{id}', [PagesController::class, 'editPrivilage'])->name('privilage.edit');
+
+    // 09 April 2025
+    Route::get('cabang', [PagesController::class, 'cabang'])->name('cabang');
+    Route::get('cabang/tambah', [PagesController::class, 'tambahCabang'])->name('cabang.tambah');
+    Route::get('cabang/edit/{id}', [PagesController::class, 'editCabang'])->name('cabang.edit');
+    Route::get('bcabang', [PagesController::class, 'bcabang'])->name('bcabang');
+    Route::get('jamaah', [PagesController::class, 'jamaah'])->name('jamaah');
+    Route::get('jamaah/tambah', [PagesController::class, 'tambahJamaah'])->name('jamaah.tambah');
+    Route::get('jamaah/edit/{id}', [PagesController::class, 'editJamaah'])->name('jamaah.edit');
 });
 
 Route::get('/check-session', function () {

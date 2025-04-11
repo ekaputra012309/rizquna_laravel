@@ -17,7 +17,8 @@ use App\Http\Controllers\KursVisaController;
 use App\Http\Controllers\PrivilageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\CabangController;
+use App\Http\Controllers\JamaahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -160,4 +161,23 @@ Route::controller(UserController::class)->group(function () {
     Route::post('user_reset/{id}', 'resetPassword')->name('user.reset');
     Route::post('user_change/{id}', 'changePassword')->name('user.change');
     Route::delete('user/{id}', 'destroy');
+});
+
+// 09 april 2025
+// cabang
+Route::controller(CabangController::class)->group(function () {
+    Route::get('cabang', 'index')->name('cabang');
+    Route::post('cabang', 'store');
+    Route::get('cabang/{id}', 'show');
+    Route::post('cabang/{id}', 'update');
+    Route::delete('cabang/{id}', 'destroy');
+});
+
+// jamaah
+Route::controller(JamaahController::class)->group(function () {
+    Route::get('jamaah', 'index')->name('jamaah');
+    Route::post('jamaah', 'store');
+    Route::get('jamaah/{id}', 'show');
+    Route::post('jamaah/{id}', 'update');
+    Route::delete('jamaah/{id}', 'destroy');
 });

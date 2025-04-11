@@ -64,6 +64,13 @@
             </a>
         </li>
 
+        <li class="sidebar-item">
+            <a href="{{ route('p.bcabang') }}" class="sidebar-link">
+                <i class="bi bi-diagram-3-fill"></i>
+                <span>Data B2C</span>
+            </a>
+        </li>
+
         <li class="sidebar-title">Report</li>
 
         <li class="sidebar-item">
@@ -82,6 +89,11 @@
             </a>
 
             <ul class="submenu">
+                <li class="submenu-item">
+                    <a href="{{ route('p.cabang') }}" class="submenu-link"
+                        >Cabang</a
+                    >
+                </li>
                 <li class="submenu-item">
                     <a href="{{ route('p.role') }}" class="submenu-link"
                         >Role</a
