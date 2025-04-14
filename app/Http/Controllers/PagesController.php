@@ -556,4 +556,16 @@ class PagesController extends Controller
         );
         return view($cabangId ? 'page.cabang.b2cabang' : 'page.cabang.b2c', $data);
     }
+
+    // 14 april 2025
+    public function cetakKwitansi($id)
+    {     
+        $pageTitle = 'Kwitansi ';
+        $detail = Jamaah::where('id', $id)->first();
+        return view('page.cabang.cetak', [
+            'pageTitle' => $pageTitle,
+            'idpage' => $id,
+            'jamaah' => $detail,
+        ]);
+    }
 }

@@ -63,6 +63,8 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('jamaah', [PagesController::class, 'jamaah'])->name('jamaah');
     Route::get('jamaah/tambah', [PagesController::class, 'tambahJamaah'])->name('jamaah.tambah');
     Route::get('jamaah/edit/{id}', [PagesController::class, 'editJamaah'])->name('jamaah.edit');
+    // 14 april 2025
+    Route::get('kwitansi/cetak/{id}', [PagesController::class, 'cetakkwitansi'])->name('kwitansi.cetak');
 });
 
 Route::get('/check-session', function () {

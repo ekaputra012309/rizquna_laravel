@@ -124,7 +124,7 @@
                                     <th>Phone</th>
                                     <th>DP</th>
                                     <th>Tgl Keberangkatan</th>
-                                    <th>Actions</th>
+                                    <th>Actions &nbsp; &nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -205,7 +205,8 @@
                                 formatTanggalIndo(jamaah.tgl_berangkat),
                                 '<button type="button" class="btn btn-primary btn-sm edit-btn" data-id="' + jamaah.id + '" title="Edit"><i class="bi bi-pencil-square"></i></button> ' +
                                 '<button class="btn btn-danger btn-sm delete-btn" data-id="' + jamaah.id + '" title="Hapus"><i class="bi bi-trash"></i></button> ' +
-                                '<button type="button" class="btn btn-success btn-sm get-btn" data-id="' + jamaah.id + '" title="Get data"><i class="bi bi-arrow-right-square"></i></button> '
+                                '<button type="button" class="btn btn-success btn-sm get-btn" data-id="' + jamaah.id + '" title="Get data"><i class="bi bi-arrow-right-square"></i></button> ' +
+                                '<button type="button" class="btn btn-secondary btn-sm kwitansi-btn" data-id="' + jamaah.id + '" title="Kwitansi"><i class="bi bi-printer"></i> Kwitansi</button> '
                             ]).draw(false);
                         });
                     }
@@ -336,6 +337,14 @@
                         console.error('Error fetching jamaah:', xhr.responseText);
                     }
                 });
+            });
+
+            $('#table1 tbody').on('click', '.kwitansi-btn', function () {
+                var jamaahId = $(this).data('id');                
+                var editHref = "{{ route('p.kwitansi.cetak', ['id' => ':id']) }}";
+                editHref = editHref.replace(':id', jamaahId);
+                // console.log(editHref);
+                window.open(editHref, '_blank');
             });
         });
 
