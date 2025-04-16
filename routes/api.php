@@ -19,6 +19,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CabangController;
 use App\Http\Controllers\JamaahController;
+use App\Http\Controllers\CabangRoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -161,6 +162,8 @@ Route::controller(UserController::class)->group(function () {
     Route::post('user_reset/{id}', 'resetPassword')->name('user.reset');
     Route::post('user_change/{id}', 'changePassword')->name('user.change');
     Route::delete('user/{id}', 'destroy');
+    // 16 april 2025
+    Route::get('user_cabang', 'userCabang')->name('user.cabang');
 });
 
 // 09 april 2025
@@ -180,4 +183,13 @@ Route::controller(JamaahController::class)->group(function () {
     Route::get('jamaah/{id}', 'show');
     Route::post('jamaah/{id}', 'update');
     Route::delete('jamaah/{id}', 'destroy');
+});
+// 14 april 2025
+// cabangrole
+Route::controller(CabangRoleController::class)->group(function () {
+    Route::get('cabangrole', 'index')->name('cabangrole');
+    Route::post('cabangrole', 'store');
+    Route::get('cabangrole/{id}', 'show');
+    Route::post('cabangrole/{id}', 'update');
+    Route::delete('cabangrole/{id}', 'destroy');
 });

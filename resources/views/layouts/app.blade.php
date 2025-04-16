@@ -134,6 +134,9 @@
                 <div id="finance-sidebar">
                     @include('layouts.sidebar.finance')
                 </div>
+                <div id="cabang-sidebar">
+                    @include('layouts.sidebar.cabang')
+                </div>
                 <div id="guest-sidebar">
                     @include('layouts.sidebar.guest')
                 </div>
@@ -307,6 +310,7 @@
                         $('#visa-sidebar').hide();
                         $('#marketing-sidebar').hide();
                         $('#finance-sidebar').hide();
+                        $('#cabang-sidebar').hide();
                         $('#guest-sidebar').hide();
 
                         // Show the appropriate sidebar based on response.kode_role
@@ -320,6 +324,8 @@
                             $('#marketing-sidebar').show();
                         } else if (response.kode_role === 'finance') {
                             $('#finance-sidebar').show();
+                        } else if (response.kode_role === 'cabang') {
+                            $('#cabang-sidebar').show();
                         } else {
                             $('#guest-sidebar').show();
                         }

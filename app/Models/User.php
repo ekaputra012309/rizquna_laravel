@@ -61,4 +61,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Privilage::class);
     }
+
+    public function cabangRoles()
+    {
+        return $this->hasMany(CabangRole::class, 'user_id');
+    }
+
+    public function cabangs()
+    {
+        return $this->belongsToMany(Cabang::class, 'cabang_role', 'user_id', 'cabang_id');
+    }
 }

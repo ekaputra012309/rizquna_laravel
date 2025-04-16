@@ -19,45 +19,78 @@
         </div>
 
         <section class="section">
-            <div class="row">
+        <div class="row" id="cabang-container">
+            @foreach($cabangs as $key => $cabang)
+                @php
+                    // Extract user_ids manually from relationship
+                    $userIds = [];
+                    foreach ($cabang->cabangRoles as $role) {
+                        $userIds[] = $role->user_id;
+                    }
 
-                @foreach($cabangs as $key => $cabang)
-                    @php
-                        // Dynamically calculate column size
-                        $colSize = 12; // Default for 1 card
-                        if (count($cabangs) == 2) {
-                            $colSize = 6; // For 2 cards, each takes 50% width
-                        } elseif (count($cabangs) == 3) {
-                            $colSize = 4; // For 3 cards, each takes 33.33% width
-                        } elseif (count($cabangs) == 4) {
-                            $colSize = 3; // For 4 cards, each takes 25% width
-                        }
-                    @endphp
+                    $randomColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+                @endphp
 
-                    <div class="col-12 col-md-3">
-                        <a href="{{ route('p.bcabang') }}?cabang={{ $cabang->id }}" class="text-decoration-none">
-                            <div class="card">
-                                <div class="card-body px-4 py-4-5">
-                                    <div class="row">
-                                        <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
-                                            <div class="stats-icon" style="background-color: {{ $cabang->randomColor }}; color: white; border-radius: 20%; padding: 10px;">
-                                                <i class="iconly-boldProfile"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                            <h6 class="text-muted font-semibold">{{ $cabang->nama_cabang }}</h6>
-                                            <h6 class="font-extrabold mb-0">{{ $cabang->jamaah_count }} Data</h6>
-                                        </div>
-                                    </div>
+                <div class="col-12 col-md-3 cabang-card" data-user-ids='@json($userIds)' style="display: none;">
+                    <a href="{{ route('p.bcabang') }}?cabang={{ $cabang->id }}" class="text-decoration-none">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stats-icon" style="background-color: {{ $randomColor }};">
+                                    <i class="iconly-boldProfile"></i>
                                 </div>
+                                <h6>{{ $cabang->nama_cabang }}</h6>
+                                <h6>{{ $cabang->jamaah_count }} Data</h6>
                             </div>
-                        </a>
-                    </div>
-                    @if(($key + 1) % 4 == 0 && ($key + 1) != count($cabangs)) 
-                        </div><div class="row"> <!-- New Row after every 4th card -->
-                    @endif
-                @endforeach
-            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+
         </section>
+        <script>
+            $(document).ready(function () {
+                var jwtToken = localStorage.getItem('jwtToken');
+
+                $.ajax({
+                    url: "{{ route('userProfile') }}",
+                    type: "GET",
+                    headers: {
+                        'Authorization': 'Bearer ' + jwtToken
+                    },
+                    success: function (response) {
+                        const userId = response.id;
+
+                        let hasMatched = false;
+
+                        $('.cabang-card').each(function () {
+                            const rawUserIds = $(this).attr('data-user-ids');
+                            
+                            if (rawUserIds) {
+                                const userIds = JSON.parse(rawUserIds);
+
+                                if (Array.isArray(userIds) && userIds.includes(userId)) {
+                                    $(this).show();
+                                    hasMatched = true;
+                                } else {
+                                    $(this).hide();
+                                }
+                            } else {
+                                $(this).show(); // default show if attribute not found
+                            }
+                        });
+
+                        // If no matches were found, show all cards as fallback
+                        if (!hasMatched) {
+                            $('.cabang-card').show();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        </script>
+
     </div>
 @endsection

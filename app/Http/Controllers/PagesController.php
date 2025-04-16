@@ -541,8 +541,9 @@ class PagesController extends Controller
         
         // $cabangs = $cabangId ? $cabangs = Jamaah::where('cabang_id', $cabangId)->get() : Cabang::all();
         $cabangs = $cabangId
-            ? Cabang::where('id', $cabangId)->withCount('jamaah')->get()
-            : Cabang::withCount('jamaah')->get();
+            ? Cabang::where('id', $cabangId)->withCount('jamaah')->with('cabangRoles')->get()
+            : Cabang::withCount('jamaah')->with('cabangRoles')->get();
+    
 
         $cabangsWithColors = $cabangs->map(function ($cabang) {
             $cabang->randomColor = sprintf('#%06X', mt_rand(0, 0xFFFFFF));  // Random color
@@ -567,5 +568,30 @@ class PagesController extends Controller
             'idpage' => $id,
             'jamaah' => $detail,
         ]);
+    }
+
+    public function Cabangrole()
+    {
+        $pageTitle = 'Akses Cabang - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+        );
+        return view('page.cabangrole.cabangrole', compact('data'));
+    }
+
+    public function tambahCabangrole()
+    {
+        $user = User::whereHas('privilage', function ($query) {
+            $query->where('role_id', 6);
+        })->get();
+        $cabang = Cabang::all();
+        $pageTitle = 'Add Akses Cabang - PT RIZQUNA MEKAH MADINAH';
+        $data = array(
+            'pageTitle' => $pageTitle,
+            'user' => $user,
+            'role' => $cabang,
+        );
+        // dd($user);
+        return view('page.cabangrole.tambah', compact('data'));
     }
 }

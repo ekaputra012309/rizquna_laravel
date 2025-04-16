@@ -25,5 +25,10 @@ class Cabang extends Model
     {
         return $this->hasMany(Jamaah::class, 'cabang_id');
     }
+    
+    public function cabangRoles()
+    {
+        return $this->hasMany(\App\Models\CabangRole::class, 'cabang_id');
+    }
 
 }

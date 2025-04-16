@@ -65,6 +65,9 @@ Route::prefix('pages')->name('p.')->group(function () {
     Route::get('jamaah/edit/{id}', [PagesController::class, 'editJamaah'])->name('jamaah.edit');
     // 14 april 2025
     Route::get('kwitansi/cetak/{id}', [PagesController::class, 'cetakkwitansi'])->name('kwitansi.cetak');
+    Route::get('cabangrole', [PagesController::class, 'Cabangrole'])->name('cabangrole');
+    Route::get('cabangrole/tambah', [PagesController::class, 'tambahCabangrole'])->name('cabangrole.tambah');
+    Route::get('cabangrole/edit/{id}', [PagesController::class, 'editCabangrole'])->name('cabangrole.edit');
 });
 
 Route::get('/check-session', function () {

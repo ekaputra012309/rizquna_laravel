@@ -85,6 +85,9 @@
                     <a href="{{ route('p.cabang') }}" class="submenu-link">Cabang</a>
                 </li>
                 <li class="submenu-item">
+                    <a href="{{ route('p.cabangrole') }}" class="submenu-link">Akses Cabang</a>
+                </li>
+                <li class="submenu-item">
                     <a href="{{ route('p.privilage') }}" class="submenu-link">Privilage</a>
                 </li>
                 <li class="submenu-item">

@@ -95,6 +95,11 @@
                     >
                 </li>
                 <li class="submenu-item">
+                    <a href="{{ route('p.cabangrole') }}" class="submenu-link"
+                        >Akses Cabang</a
+                    >
+                </li>
+                <li class="submenu-item">
                     <a href="{{ route('p.role') }}" class="submenu-link"
                         >Role</a
                     >

@@ -21,7 +21,6 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-
     public function show($id)
     {
         try {
@@ -91,5 +90,16 @@ class UserController extends Controller
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'User not found'], 404);
         }
+    }
+
+    public function userCabang()
+    {
+        $users = User::where('email', '!=', 'admin123@gmail.com')
+            ->whereHas('privilage', function ($query) {
+                $query->where('role_id', 6);
+            })
+            ->get();
+
+        return response()->json($users);
     }
 }
